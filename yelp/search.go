@@ -68,8 +68,7 @@ func (so SearchOptions) URLValues() url.Values {
 	}
 	if so.OpenNow != nil {
 		vals.Add("open_now", BoolString(*so.OpenNow))
-	}
-	if so.OpenAt != nil {
+	} else if so.OpenAt != nil {
 		vals.Add("open_at", IntString(*so.OpenAt))
 	}
 	if so.Attributes != nil {
