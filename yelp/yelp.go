@@ -3,6 +3,7 @@ package yelp
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -17,6 +18,9 @@ const (
 	// searchPath is the path to search for businesses
 	searchPath = "/v3/businesses/search"
 
+	// businessPath is the path to get a business by its id
+	businessPath = "/v3/businesses/%s"
+
 	// tokenPath is the path to fetch the bearer's access token
 	tokenPath = "/oauth2/token"
 )
@@ -24,6 +28,7 @@ const (
 // Client defines the current available Yelp API requests that can be made.
 type Client interface {
 	Search(SearchOptions) (SearchResults, error)
+	BusinessByID(businessID string) (Business, error)
 }
 
 // client implements the Client interface.
@@ -65,8 +70,17 @@ func (c *client) Search(so SearchOptions) (SearchResults, error) {
 		return respBody, errors.New("SearchOptions provided is not valid. Please see yelp/search.go for more details.")
 	}
 
-	url := apiHost + searchPath + "?" + so.URLValues().Encode()
-	_, err := c.authedDo("GET", url, nil, nil, &respBody)
+	urlStr := apiHost + searchPath + "?" + so.URLValues().Encode()
+	_, err := c.authedDo("GET", urlStr, nil, nil, &respBody)
+	return respBody, err
+}
+
+// BusinessByID looks for a business information by its id.
+func (c *client) BusinessByID(businessID string) (Business, error) {
+	respBody := Business{}
+
+	urlStr := apiHost + fmt.Sprintf(businessPath, businessID)
+	_, err := c.authedDo("GET", urlStr, nil, nil, &respBody)
 	return respBody, err
 }
 

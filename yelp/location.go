@@ -8,10 +8,11 @@ type Location struct {
 	Address2       string   `json:"address2"`
 	Address3       string   `json:"address3"`
 	City           string   `json:"city"`
-	Country        string   `json:"country"`
-	DisplayAddress []string `json:"display_address"`
 	State          string   `json:"state"`
 	ZipCode        string   `json:"zip_code"`
+	Country        string   `json:"country"`
+	DisplayAddress []string `json:"display_address"`
+	CrossStreets   string   `json:"cross_streets"`
 }
 
 // Coordinates defines a location with Latitude and Longitude.

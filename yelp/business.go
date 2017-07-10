@@ -8,19 +8,23 @@ type Category struct {
 
 // Business defines a business returned by the Yelp API.
 type Business struct {
-	Categories   []Category  `json:"categories"`
-	Coodinates   Coordinates `json:"coordinates"`
-	DisplayPhone string      `json:"display_phone"`
-	Distance     float64     `json:"distance"`
 	ID           string      `json:"id"`
-	ImageURL     string      `json:"image_url"`
-	IsClosed     bool        `json:"is_closed"`
-	Location     Location    `json:"location"`
 	Name         string      `json:"name"`
-	Phone        string      `json:"phone"`
+	ImageURL     string      `json:"image_url"`
+	IsClaimed    bool        `json:"is_claimed"`
+	IsClosed     bool        `json:"is_closed"`
+	URL          string      `json:"url"`
 	Price        string      `json:"price"`
 	Rating       float64     `json:"rating"`
 	ReviewCount  int64       `json:"review_count"`
-	URL          string      `json:"url"`
+	Phone        string      `json:"phone"`
+	Photos       []string    `json:"photos"`
+	Categories   []Category  `json:"categories"`
+	Coodinates   Coordinates `json:"coordinates"`
+	Location     Location    `json:"location"`
 	Transactions []string    `json:"transactions"`
+
+	// Only in search result
+	DisplayPhone string  `json:"display_phone"`
+	Distance     float64 `json:"distance"`
 }
