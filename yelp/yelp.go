@@ -108,11 +108,12 @@ func (c *client) authedDo(method string, url string, body io.Reader, headers map
 	if err != nil {
 		return resp, err
 	}
-	defer func() {
-		if err := resp.Body.Close(); err != nil {
-			log.Print(err)
-		}
-	}()
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return resp, fmt.Errorf("Yelp request failed with status %s", resp.Status)
+	}
 
 	err = json.NewDecoder(resp.Body).Decode(v)
 	return resp, err
